@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Gen8Resizer</string>
+	<string name="incomp_device_title">Incompatible device</string>
+	<string name="incomp_device">Your device is not compatible with this application.</string>
+    <string name="need_root_title">Need root privileges</string>
+    <string name="need_root">You need root privileges on your device for SuperDim
+    to work.  
+    You may want to search the web for "root" and the name of your device on how 
+    to achieve this and consult local laws.</string>
+    <string name="ok">OK</string>
+    <string name="instructions">SuperDim directly sets the screen brightness to any value from 
+    a minimum much dimmer than the system settings normally allow (unfortunately,
+    sometimes you\'ll default back to the system minimum) to the maximum.  
+    You need root privileges on your device.</string>
+    <string name="min">min</string>
+    <string name="percent_25">25%</string>    
+    <string name="percent_50">50%</string>    
+    <string name="percent_75">75%</string>    
+    <string name="percent_100">100%</string>  
+    <string name="led">Other lights</string>  
+    <string name="cf3d_nightmode_button">CF3D night mode</string>
+    <string name="cm_nightmode_button">CM night mode</string>
+    <string name="nightmode_disabled">Disabled</string>
+    <string name="nightmode_red">Red</string>
+    <string name="nightmode_green">Green</string>
+    <string name="nightmode_blue">Blue</string>
+    <string name="nightmode_amber">Amber</string>
+    <string name="nightmode_salmon">Salmon</string>
+    <string name="nightmode_dark_red">Darker red</string>
+    <string name="nightmode_sepia">Sepia</string>
+    <string name="nightmode_light_sepia">Light sepia</string>
+    <string name="nightmode_fuchsia">Fuscia</string>
+    <string name="custom0">night1</string>
+    <string name="custom1">night2</string>
+    <string name="custom2">night3</string>
+    <string name="custom3">day1</string>
+    <string name="custom4">day2</string>
+    <string name="custom_buttons">Load custom settings with short touch and save with long touch:</string>
+</resources>
