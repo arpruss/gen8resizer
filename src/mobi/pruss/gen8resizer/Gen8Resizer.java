@@ -231,6 +231,7 @@ public class Gen8Resizer extends Activity {
 		barControl.setOnSeekBarChangeListener(seekbarListener);
 
     	barControl.setProgress(width);
+		currentValue.setText(""+width);
     }
     
     @Override
