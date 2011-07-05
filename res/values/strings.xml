@@ -9,4 +9,34 @@
     to work.  
     You may want to search the web for Archos rw root.</string>
     <string name="ok">OK</string>
+    <string-array name="key_names">
+    	<item>None</item>
+		<item>Back</item>
+		<item>Camera</item>
+		<item>DPad Center</item>
+		<item>DPad Down</item>
+		<item>DPad Left</item>
+		<item>DPad Right</item>
+		<item>DPad Up</item>
+		<item>Home</item>
+		<item>Menu</item>
+		<item>Search</item>
+		<item>Volume+</item>
+		<item>Volume-</item>
+    </string-array>
+    <string-array name="key_numbers">
+    	<item>0</item>
+		<item>158</item>
+		<item>212</item> 
+		<item>232</item>
+		<item>108</item>
+		<item>103</item>
+		<item>105</item>
+		<item>106</item>
+		<item>102</item>
+		<item>229</item>
+		<item>217</item>
+		<item>115</item>
+		<item>114</item>    	
+    </string-array>
 </resources>
