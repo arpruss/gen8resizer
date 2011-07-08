@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileReader;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +54,14 @@ public class ArchosButtons extends Activity {
 		{ 217, 102, 229, 158, 0,0,0,0 },
 		{ 217, 102, 229, 158, 0,0,0,0 }
 	};
+	private static final String originals[] = {
+		"0x12:217:980:0:44:600:0:0:1:.25:0x12:102:980:0:44:600:0:.25:1:.5:0x12:229:980:0:44:600:0:.5:1:.75:0x12:158:980:0:44:600:0:.75:1:1",
+		"0x12:158:0:800:480:54:0:0:.25:1:0x12:229:0:800:480:54:.25:0:.5:1:0x12:102:0:800:480:54:.5:0:.75:1:0x12:217:0:800:480:54:.75:0:1:1",
+		"0x12:217:760:0:40:480:0:0:1:.25:0x12:102:760:0:40:480:0:.25:1:.5:0x12:229:760:0:40:480:0:.5:1:.75:0x12:158:760:0:40:480:0:.75:1:1",
+		"0x12:217:980:0:44:600:0:0:1:.25:0x12:102:980:0:44:600:0:.25:1:.5:0x12:229:980:0:44:600:0:.5:1:.75:0x12:158:980:0:44:600:0:.75:1:1",
+		"0x12:217:760:0:40:480:0:0:1:.25:0x12:102:760:0:40:480:0:.25:1:.5:0x12:229:760:0:40:480:0:.5:1:.75:0x12:158:760:0:40:480:0:.75:1:1",
+		"0x12:217:980:0:44:600:0:0:1:.25:0x12:102:980:0:44:600:0:.25:1:.5:0x12:229:980:0:44:600:0:.5:1:.75:0x12:158:980:0:44:600:0:.75:1:1"		
+	};
 	private int width;
 	private int keys[];
 	private int model;
@@ -76,11 +86,24 @@ public class ArchosButtons extends Activity {
 		return -1;
 	}
 	
+	private String format(double x) {
+		NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
+		nf.setMaximumFractionDigits(3);
+
+		String s = nf.format(x);
+		
+		if (s.startsWith("0.") && s.length()>2 && x != 0) {
+			/* trim zero */
+			return s.substring(1);
+		}
+		
+		return s;
+	}
+	
 	private String makeKeyLine() {
 		String newBar;
 		int myWidth;
 		int[] myKeys;
-		DecimalFormat df = new DecimalFormat("#.####");
 		
 		int keyCount = 0;
 		for(int i=0; i<MAX_BUTTONS; i++) {
@@ -113,12 +136,12 @@ public class ArchosButtons extends Activity {
 			if (myKeys[i] != 0) {
 				line += "0x12:"+myKeys[i]+":"+newBar+":";
 				if (bottom) {
-					line += df.format((double)pos/keyCount) + ":0:" + 
-						df.format((double)(pos+1)/keyCount) + ":1";
+					line += format((double)pos/keyCount) + ":0:" + 
+						format((double)(pos+1)/keyCount) + ":1";
 				}
 				else {
-					line += "0:" + df.format((double)pos/keyCount) + ":1:" + 
-						df.format((double)(pos+1)/keyCount);
+					line += "0:" + format((double)pos/keyCount) + ":1:" + 
+						format((double)(pos+1)/keyCount);
 				}
 				if (pos + 1 < keyCount)
 					line += ":";
@@ -129,11 +152,18 @@ public class ArchosButtons extends Activity {
 		return line;		
 	}
 	
-	public void setAndReboot(View w) {
-		String key = makeKeyLine();
+	public void doSetAndReboot(String key) {
 		root.exec("sed -i \"1s/.*/" + key + "/\" \"" + getFilename() + "\"");
 		root.exec("killall zygote");
 		root.close();
+	}
+	
+	public void setAndReboot(View w) {
+		doSetAndReboot(makeKeyLine());
+	}
+	
+	public void restore(View w) {
+		doSetAndReboot(originals[model]);
 	}
 	
 	public void showSettings() {
@@ -198,6 +228,7 @@ public class ArchosButtons extends Activity {
 	
 	boolean getModel() {
 		String modelName = getProp(modelProp, 64);
+
 		for (int i=0; i<models.length; i++) {
 			if (modelName.equals(models[i])) {
 				model = i;
