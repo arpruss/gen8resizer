@@ -15,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -244,8 +246,8 @@ public class ArchosButtons extends Activity {
 	
 	boolean loadSettings() {
 		try {
-			BufferedReader in
-			   = new BufferedReader(new FileReader(getFilename()));
+			FileReader fr = new FileReader(getFilename());
+			BufferedReader in = new BufferedReader(fr);
 			String line = in.readLine();
 			line = line.trim();
 			
@@ -296,7 +298,7 @@ public class ArchosButtons extends Activity {
 					}				
 				}
 				else {
-					keys[i] = defaultKeys[model][i];
+					keys[i] = 0; // defaultKeys[model][i];
 				}
 			}
 						
@@ -342,6 +344,7 @@ public class ArchosButtons extends Activity {
 
         if (! getModel() || ! loadSettings()) {
         	fatalError(R.string.incomp_device_title, R.string.incomp_device);
+        	return;
         }
 
         if (!Root.test()) {
@@ -383,6 +386,8 @@ public class ArchosButtons extends Activity {
 		barControl.setOnSeekBarChangeListener(seekbarListener);
 
 		showSettings();
+		
+		new PleaseBuy(this, false);
     }
     
     @Override
@@ -396,4 +401,21 @@ public class ArchosButtons extends Activity {
     	super.onStop();
     	root.close();
     }    
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.please_buy:
+    		new PleaseBuy(this, true);
+    		return true;
+    	default:
+    		return false;
+    	}
+    }
+
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+	    return true;
+	}
 }
